@@ -14,14 +14,14 @@ func NewThreadSafeGraph() *ThreadSafeGraph {
 }
 
 // Add a new edge to this graph
-func (graph *ThreadSafeGraph) addEdge(from string, to string) {
+func (graph *ThreadSafeGraph) AddEdge(from string, to string) {
 	graph.Lock()
 	defer graph.Unlock()
 	graph.Graph[from] = append(graph.Graph[from], to)
 }
 
 // Check if a node exists
-func (graph *ThreadSafeGraph) nodeExists(node string) bool {
+func (graph *ThreadSafeGraph) NodeExists(node string) bool {
 	_, ok := graph.Graph[node]
 	return ok
 }
