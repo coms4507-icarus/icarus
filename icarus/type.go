@@ -15,6 +15,8 @@ func NewThreadSafeGraph() *ThreadSafeGraph {
 
 // Add a new edge to this graph
 func (graph *ThreadSafeGraph) addEdge(from string, to string) {
+	graph.Lock()
+	defer graph.Unlock()
 	graph.Graph[from] = append(graph.Graph[from], to)
 }
 
