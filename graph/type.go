@@ -5,7 +5,7 @@ import "sync"
 // Thread safe graph to work with goroutines
 type ThreadSafeGraph struct {
 	Graph map[string][]string
-	*sync.RWMutex
+	lock  sync.RWMutex
 }
 
 // Create a new thread safe graph
@@ -15,13 +15,15 @@ func NewThreadSafeGraph() *ThreadSafeGraph {
 
 // Add a new edge to this graph
 func (graph *ThreadSafeGraph) AddEdge(from string, to string) {
-	graph.Lock()
-	defer graph.Unlock()
+	graph.lock.Lock()
 	graph.Graph[from] = append(graph.Graph[from], to)
+	graph.lock.Unlock()
 }
 
 // Check if a node exists
 func (graph *ThreadSafeGraph) NodeExists(node string) bool {
+	graph.lock.RLock()
 	_, ok := graph.Graph[node]
+	graph.lock.RUnlock()
 	return ok
 }
