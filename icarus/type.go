@@ -17,3 +17,9 @@ func NewThreadSafeGraph() *ThreadSafeGraph {
 func (graph *ThreadSafeGraph) addEdge(from string, to string) {
 	graph.Graph[from] = append(graph.Graph[from], to)
 }
+
+// Check if a node exists
+func (graph *ThreadSafeGraph) nodeExists(node string) bool {
+	_, ok := graph.Graph[node]
+	return ok
+}
