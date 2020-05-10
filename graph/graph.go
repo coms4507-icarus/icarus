@@ -33,6 +33,7 @@ func (graph *ThreadSafeGraph) Graph() map[string][]string {
 	mapCopy := make(map[string][]string)
 	graph.lock.RLock()
 	for key, value := range graph.graph {
+		mapCopy[key] = []string{}
 		copy(mapCopy[key], value)
 	}
 	graph.lock.RUnlock()
