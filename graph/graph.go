@@ -16,21 +16,22 @@ func NewThreadSafeGraph() *ThreadSafeGraph {
 // Add a new edge to this graph
 func (graph *ThreadSafeGraph) AddEdge(from string, to string) {
 	graph.lock.Lock()
-	defer graph.lock.Unlock()
 	graph.Graph[from] = append(graph.Graph[from], to)
+	graph.lock.Unlock()
 }
 
 // Check if a node exists
 func (graph *ThreadSafeGraph) NodeExists(node string) bool {
 	graph.lock.RLock()
-	defer graph.lock.RUnlock()
 	_, ok := graph.Graph[node]
+	graph.lock.RUnlock()
 	return ok
 }
 
 // get size of graph
 func (graph *ThreadSafeGraph) Size() int {
 	graph.lock.RLock()
-	defer graph.lock.RUnlock()
-	return len(graph.Graph)
+	size := len(graph.Graph)
+	graph.lock.RUnlock()
+	return size
 }
