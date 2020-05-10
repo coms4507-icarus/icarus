@@ -30,7 +30,7 @@ func (graph *ThreadSafeGraph) NodeExists(node string) bool {
 
 // Get a json-serializable copy of the graph
 func (graph *ThreadSafeGraph) Graph() map[string][]string {
-	var mapCopy map[string][]string
+	mapCopy := make(map[string][]string)
 	graph.lock.RLock()
 	for key, value := range graph.graph {
 		copy(mapCopy[key], value)
