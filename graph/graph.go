@@ -28,7 +28,7 @@ func (graph *ThreadSafeGraph) NodeExists(node string) bool {
 	return ok
 }
 
-// Check if a node exists
+// Get a json-serializable copy of the graph
 func (graph *ThreadSafeGraph) Graph() map[string][]string {
 	var mapCopy map[string][]string
 	graph.lock.RLock()
