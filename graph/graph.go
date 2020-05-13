@@ -39,6 +39,14 @@ func (graph *ThreadSafeGraph) Graph() map[string][]string {
 	return mapCopy
 }
 
+// Get neighbours of a node
+func (graph *ThreadSafeGraph) GetNeighbours(node string) []string {
+	graph.lock.RLock()
+	neighbours := graph.graph[node]
+	graph.lock.RUnlock()
+	return neighbours
+}
+
 // get size of graph
 func (graph *ThreadSafeGraph) Size() int {
 	graph.lock.RLock()
